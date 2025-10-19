@@ -5,7 +5,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, classification_report
 import pandas as pd
 import numpy as np
-from .utils import get_logger
+from trading_assistant.utils import get_logger
 
 logger = get_logger(__name__)
 

@@ -1,6 +1,6 @@
 # trading_assistant/risk_management.py
 
-from .utils import get_logger
+from trading_assistant.utils import get_logger
 
 logger = get_logger(__name__)
 

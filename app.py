@@ -1,14 +1,14 @@
-# trading_assistant/app.py
+# app.py
 
 import streamlit as st
 import pandas as pd
-from .data_handler import fetch_historical_data, fetch_realtime_data, fetch_news_headlines
-from .analysis import calculate_technical_indicators, determine_market_personality, analyze_sentiment
-from .trading_logic import make_trading_decision, initialize_alpaca_api, check_alpaca_connection, place_order
-from .risk_management import calculate_position_size, calculate_stop_loss, calculate_target_profit
-from .ml_model import prepare_data_for_ml, train_ml_model, get_ml_prediction
-from .utils import get_logger
-from .config import FINNHUB_API_KEY
+from trading_assistant.data_handler import fetch_historical_data, fetch_realtime_data, fetch_news_headlines
+from trading_assistant.analysis import calculate_technical_indicators, determine_market_personality, analyze_sentiment
+from trading_assistant.trading_logic import make_trading_decision, initialize_alpaca_api, check_alpaca_connection, place_order
+from trading_assistant.risk_management import calculate_position_size, calculate_stop_loss, calculate_target_profit
+from trading_assistant.ml_model import prepare_data_for_ml, train_ml_model, get_ml_prediction
+from trading_assistant.utils import get_logger
+from trading_assistant.config import FINNHUB_API_KEY
 from alpaca.trading.enums import OrderSide
 import finnhub
 
