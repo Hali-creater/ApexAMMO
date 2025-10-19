@@ -6,30 +6,19 @@ from sklearn.metrics import accuracy_score, classification_report
 import pandas as pd
 import numpy as np
 from trading_assistant.utils import get_logger
+import joblib
+import os
 
 logger = get_logger(__name__)
+MODEL_FILE = "trading_model.joblib"
 
 def prepare_data_for_ml(df_with_indicators):
     """
     Prepares the data for ML model training.
     """
-    if 'df_with_indicators' not in locals() or df_with_indicators.empty:
-        logger.warning("Using dummy data as 'df_with_indicators' was not found or is empty.")
-        data = {
-            'Open': np.random.rand(100) * 100 + 50,
-            'High': np.random.rand(100) * 100 + 55,
-            'Low': np.random.rand(100) * 100 + 45,
-            'Close': np.random.rand(100) * 100 + 50,
-            'Volume': np.random.rand(100) * 1000000,
-            'RSI_14': np.random.rand(100) * 50 + 25,
-            'MACD_12_26_9': np.random.rand(100) * 5 - 2.5,
-            'MACDH_12_26_9': np.random.rand(100) * 2 - 1,
-            'MACDS_12_26_9': np.random.rand(100) * 4 - 2,
-        }
-        index = pd.date_range(start='2023-01-01', periods=100, freq='D')
-        df_with_indicators = pd.DataFrame(data, index=index)
-        df_with_indicators['SMA_20'] = df_with_indicators['Close'].rolling(window=20).mean().fillna(0)
-        df_with_indicators['SMA_50'] = df_with_indicators['Close'].rolling(window=50).mean().fillna(0)
+    if df_with_indicators.empty:
+        logger.error("Input DataFrame is empty. Cannot prepare data for ML.")
+        return pd.DataFrame()
 
     df_with_indicators['Target'] = (df_with_indicators['Close'].shift(-1) > df_with_indicators['Close']).astype(int)
     df_with_indicators.dropna(subset=['Target'], inplace=True)
@@ -37,7 +26,7 @@ def prepare_data_for_ml(df_with_indicators):
 
 def train_ml_model(df_model):
     """
-    Trains the machine learning model.
+    Trains the machine learning model and saves it to a file.
     """
     if df_model.empty:
         logger.error("DataFrame is empty. Cannot train ML model.")
@@ -65,7 +54,22 @@ def train_ml_model(df_model):
     logger.info(f"Model Accuracy: {accuracy}")
     logger.info(f"Classification Report:\\n{classification_rep}")
 
+    # Save the trained model
+    joblib.dump(model, MODEL_FILE)
+    logger.info(f"Model saved to {MODEL_FILE}")
+
     return model, features
+
+def load_ml_model():
+    """
+    Loads a pre-trained machine learning model from a file.
+    """
+    if os.path.exists(MODEL_FILE):
+        logger.info(f"Loading model from {MODEL_FILE}")
+        return joblib.load(MODEL_FILE)
+    else:
+        logger.warning("No pre-trained model found.")
+        return None
 
 def get_ml_prediction(model, data, features):
     """
