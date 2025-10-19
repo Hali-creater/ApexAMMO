@@ -1,0 +1,9 @@
+streamlit
+pandas
+yfinance
+finnhub-python
+pandas-ta
+scikit-learn
+nltk
+python-dotenv
+alpaca-py
