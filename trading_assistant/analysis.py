@@ -4,7 +4,7 @@ import pandas as pd
 import pandas_ta as ta
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import nltk
-from .utils import get_logger
+from trading_assistant.utils import get_logger
 from urllib.error import URLError
 
 logger = get_logger(__name__)

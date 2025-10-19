@@ -3,7 +3,7 @@
 import yfinance as yf
 import finnhub
 import pandas as pd
-from .utils import get_logger
+from trading_assistant.utils import get_logger
 from datetime import datetime, timedelta
 
 logger = get_logger(__name__)

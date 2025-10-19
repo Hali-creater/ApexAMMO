@@ -1,7 +1,7 @@
 # trading_assistant/trading_logic.py
 
 import pandas as pd
-from .utils import get_logger
+from trading_assistant.utils import get_logger
 from alpaca.trading.client import TradingClient
 from alpaca.trading.requests import MarketOrderRequest
 from alpaca.trading.enums import OrderSide, TimeInForce
